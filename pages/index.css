@@ -1,0 +1,9 @@
+@import url(../vendor/normalize.css);
+/*Подключаем шрифт*/
+@import url(../vendor/fonts/fonts.css);
+/*Блок page */
+@import url(../blocks/page/page.css);
+/*Блок centred-block */
+@import url(../blocks/centred-block/centred-block.css);
+/*Блок header*/
+@import url(../blocks/header/header.css);
