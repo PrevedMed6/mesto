@@ -1,5 +1,6 @@
 .page {
   background-color: #000;
+  color: #FFF;
   font-family: 'Inter', 'Arial', sans-serif;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -7,6 +8,6 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
-  max-width: 1280px;
+  max-width: 880px;
   margin: auto;
 }

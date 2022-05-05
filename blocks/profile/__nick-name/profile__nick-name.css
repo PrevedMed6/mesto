@@ -1,0 +1,10 @@
+.profile__nick-name {
+  display: flex;
+  padding-bottom: 18px;
+  align-items: baseline;
+}
+@media screen and (max-width:425px) {
+  .profile__nick-name {
+    padding-bottom: 14px;
+  }
+}

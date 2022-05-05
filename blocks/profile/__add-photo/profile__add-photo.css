@@ -1,0 +1,13 @@
+.profile__add-photo {
+  border: 1px #FFF solid;
+  padding: 14px 64px;
+  width: 22px;
+}
+
+@media screen and (max-width:600px) {
+  .profile__add-photo {
+    padding: 17px calc((100% - 18px)/2);
+    width: 16px;
+    margin-top: 36px;
+  }
+}
