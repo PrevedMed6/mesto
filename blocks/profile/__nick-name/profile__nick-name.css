@@ -6,5 +6,6 @@
 @media screen and (max-width:425px) {
   .profile__nick-name {
     padding-bottom: 14px;
+    position: relative;
   }
 }

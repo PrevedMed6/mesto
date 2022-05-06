@@ -1,0 +1,10 @@
+.element__heart {
+  transition: opacity .3s linear;
+  cursor: pointer;
+  background: url('../../../image/heart.svg');
+  width: 22px;
+  height: 19px;
+}
+.element__heart:hover {
+  opacity: .6;
+}

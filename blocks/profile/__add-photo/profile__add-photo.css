@@ -2,6 +2,12 @@
   border: 1px #FFF solid;
   padding: 14px 64px;
   width: 22px;
+  transition: opacity .3s linear;
+  cursor: pointer;
+}
+
+.profile__add-photo:hover {
+  opacity: .6
 }
 
 @media screen and (max-width:600px) {

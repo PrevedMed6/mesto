@@ -3,10 +3,12 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.2;
+  max-width: 294px;
 }
 
 @media screen and (max-width:768px){
   .profile__description {
     font-size: 14px;
+    max-width: 189px;
   }
 }
