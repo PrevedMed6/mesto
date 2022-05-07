@@ -37,3 +37,7 @@
 /*Блок footer*/
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
+/*Блок form-container*/
+@import url(../blocks/form/form.css);
+@import url(../blocks/form/_closed/form_closed.css);
+@import url(../blocks/form/__edit/form__edit.css);
