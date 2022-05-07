@@ -7,33 +7,33 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <section class="form">
+    <section class="form form_closed">
       <form class="form__edit">
         <span class="form__close"></span>
         <h2 class="form__heading">Редактировать профиль</h2>
         <fieldset class="form__input-container">
-          <input type="text" class="form__input">
-          <input type="text" class="form__input">
+          <input type="text" class="form__input" id="nameInput">
+          <input type="text" class="form__input" id="jobInput">
         </fieldset>
-        <fieldset class="form__handlers">
+        <fieldset class="form__input-container">
           <input type="submit" class="form__button">
         </fieldset>
       </form>
     </section>
     <header class="header centred-block">
       <img src="./image/logo.svg" class="header__logo" alt="Логотип">
-      <div class="header__line">
+      <div class="header__line"></div>
     </header>
     <main class="main">
       <section class="profile centred-block">
         <div class="profile__info">
           <img src="./image/avatar.jpg" class="profile__avatar" alt="Аватар">
           <div class="profile__text">
-            <div class="profile__nick-name">
-              <h1 class="profile__title block">Жак-Ив Кусто</h1>
+            <div class="profile__name">
+              <h1 class="profile__title nooverflow-block">Жак-Ив Кусто</h1>
               <img src="./image/pencil.svg" class="profile__edit-button" alt="Кнопка редактирования профиля">
             </div>
-            <p class="profile__description block">Исследователь океана</p>
+            <p class="profile__job nooverflow-block">Исследователь океана</p>
           </div>
         </div>
         <span  class="element__heart"></span>
@@ -45,7 +45,7 @@
               <img src="./image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg" class="element__image" alt="Вода под водой">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Вода под водой">Вода под водой</h2>
+              <h2 class="element__title-text nooverflow-block" title="Вода под водой">Вода под водой</h2>
               <span  class="element__heart"></span>
             </div>
           </li>
@@ -54,7 +54,7 @@
               <img src="./image/iceberg.jpg" class="element__image" alt="Северный Ледовитый океан">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Северный Ледовитый океан">Северный Ледовитый океан</h2>
+              <h2 class="element__title-text nooverflow-block" title="Северный Ледовитый океан">Северный Ледовитый океан</h2>
               <span  class="element__heart"></span>
             </div>
           </li>
@@ -63,7 +63,7 @@
               <img src="./image/jcob-nasyr-hZPYwYR02Yo-unsplash.jpg" class="element__image" alt="Атол">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Атол">Атол</h2>
+              <h2 class="element__title-text nooverflow-block" title="Атол">Атол</h2>
               <span  class="element__heart"></span>
             </div>
           </li>
@@ -72,7 +72,7 @@
               <img src="./image/joel-filipe-_AjqGGafofE-unsplash.jpg" class="element__image" alt="Южные моря">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Южные моря">Южные моря</h2>
+              <h2 class="element__title-text nooverflow-block" title="Южные моря">Южные моря</h2>
               <span  class="element__heart"></span>
             </div>
           </li>
@@ -81,7 +81,7 @@
               <img src="./image/linus-nylund-UCIZh0-OYPw-unsplash.jpg" class="element__image" alt="Пляж для звезды">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Пляж для звезды">Пляж для звезды</h2>
+              <h2 class="element__title-text nooverflow-block" title="Пляж для звезды">Пляж для звезды</h2>
               <span  class="element__heart"></span>
             </div>
           </li>
@@ -90,7 +90,7 @@
               <img src="./image/milos-prelevic-2xuiab6o-qc-unsplash.jpg" class="element__image" alt="Большой барьерный риф">
             </div>
             <div class="element__title">
-              <h2 class="element__title-text block" title="Большой барьерный риф">Большой барьерный риф</h2>
+              <h2 class="element__title-text nooverflow-block" title="Большой барьерный риф">Большой барьерный риф</h2>
               <span class="element__heart"></span>
             </div>
           </li>
@@ -100,5 +100,6 @@
     <footer class="footer centred-block">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
+    <script src="./index.js"></script>
   </body>
 </html>
