@@ -3,4 +3,6 @@
   padding-bottom: 100%;
   overflow: hidden;
   height: 0;
+  grid-row: 1;
+  grid-column: 1;
 }

@@ -3,9 +3,6 @@
   width: 100%;
   border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background-color: #FFF;
-  box-sizing: border-box;
-  aspect-ratio: 282/361;
+  display: grid;
+  grid-template-columns: 100%;
  }
