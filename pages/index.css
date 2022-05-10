@@ -10,7 +10,6 @@
 /*Блок header*/
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__line/header__line.css);
 /*Блок main*/
 @import url(../blocks/main/main.css);
 /*Блок profile*/
@@ -29,7 +28,6 @@
 /*Блок element*/
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__image-container/element__image-container.css);
-@import url(../blocks/element/__background/element__background.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__title/element__title.css);
 @import url(../blocks/element/__title-text/element__title-text.css);
@@ -39,11 +37,12 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 /*Блок form-container*/
-@import url(../blocks/form/form.css);
-@import url(../blocks/form/_closed/form_closed.css);
-@import url(../blocks/form/__edit/form__edit.css);
-@import url(../blocks/form/__close/form__close.css);
-@import url(../blocks/form/__heading/form__heading.css);
-@import url(../blocks/form/__input-container/form__input-container.css);
-@import url(../blocks/form/__input/form__input.css);
-@import url(../blocks/form/__button/form__button.css);
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/_opened/popup_opened.css);
+@import url(../blocks/popup/__container/popup__container.css);
+@import url(../blocks/popup/__close/popup__close.css);
+@import url(../blocks/popup/__heading/popup__heading.css);
+@import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input-container/popup__input-container.css);
+@import url(../blocks/popup/__input/popup__input.css);
+@import url(../blocks/popup/__button/popup__button.css);

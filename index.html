@@ -7,22 +7,21 @@
     <title>Mesto</title>
   </head>
   <body class="page">
-    <section class="form form_closed">
-      <form class="form__edit">
-        <span class="form__close"></span>
-        <h2 class="form__heading">Редактировать профиль</h2>
-        <fieldset class="form__input-container">
-          <input type="text" class="form__input" id="nameInput" required>
-          <input type="text" class="form__input" id="jobInput" required>
-        </fieldset>
-        <fieldset class="form__input-container">
-          <input type="submit" class="form__button">
-        </fieldset>
-      </form>
+    <section class="popup">
+      <div class="popup__container">
+        <button type="reset" class="popup__close"></button>
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form class="popup__form" name="edit-form">
+          <fieldset class="popup__input-container">
+            <input type="text" class="popup__input" id="nameInput" placeholder = "Как вас зовут?" required>
+            <input type="text" class="popup__input" id="jobInput" placeholder="Чем вы занимаетесь?" required>
+          </fieldset>
+          <input type="submit" class="popup__button">
+        </form>
+      </div>
     </section>
     <header class="header centred-block">
       <img src="./image/logo.svg" class="header__logo" alt="Логотип">
-      <div class="header__line"></div>
     </header>
     <main class="main">
       <section class="profile centred-block">
@@ -31,73 +30,67 @@
           <div class="profile__text">
             <div class="profile__name">
               <h1 class="profile__title nooverflow-block">Жак-Ив Кусто</h1>
-              <img src="./image/pencil.svg" class="profile__edit-button" alt="Кнопка редактирования профиля">
+              <button type="button" class="profile__edit-button"></button>
             </div>
             <p class="profile__job nooverflow-block">Исследователь океана</p>
           </div>
         </div>
-        <img src="./image/plus.svg" class="profile__add-photo" alt="Добавить фотографию">
+        <button type="button" class="profile__add-photo"></button>
       </section>
       <section class="elements centred-block">
         <ul class="elements__grid">
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg" class="element__image" alt="Вода под водой">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Вода под водой">Вода под водой</h2>
-              <span  class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/iceberg.jpg" class="element__image" alt="Северный Ледовитый океан">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Северный Ледовитый океан">Северный Ледовитый океан</h2>
-              <span  class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/jcob-nasyr-hZPYwYR02Yo-unsplash.jpg" class="element__image" alt="Атол">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Атол">Атол</h2>
-              <span  class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/joel-filipe-_AjqGGafofE-unsplash.jpg" class="element__image" alt="Южные моря">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Южные моря">Южные моря</h2>
-              <span  class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/linus-nylund-UCIZh0-OYPw-unsplash.jpg" class="element__image" alt="Пляж для звезды">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Пляж для звезды">Пляж для звезды</h2>
-              <span  class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
           <li class="element">
-            <div class="element__background"></div>
             <div class="element__image-container">
               <img src="./image/milos-prelevic-2xuiab6o-qc-unsplash.jpg" class="element__image" alt="Большой барьерный риф">
             </div>
             <div class="element__title">
               <h2 class="element__title-text nooverflow-block" title="Большой барьерный риф">Большой барьерный риф</h2>
-              <span class="element__heart"></span>
+              <button type="button" class="element__heart"></button>
             </div>
           </li>
         </ul>
@@ -106,6 +99,6 @@
     <footer class="footer centred-block">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
-    <script src="./index.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>
