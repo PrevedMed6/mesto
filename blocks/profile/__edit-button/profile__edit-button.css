@@ -12,6 +12,7 @@
   height: 24px;
   box-sizing: border-box;
   padding: 0;
+  display: inherit;
 }
 
 .profile__edit-button:hover {
