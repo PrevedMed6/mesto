@@ -118,8 +118,6 @@ function makeCard(cardItem)
   buttonDelete.addEventListener('click',deleteButtonClickHandler);
   return newCard;
 }
-//Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
-initialCards.forEach(renderCard);
 
 //Добавить все необходимые события
 buttonOpenEditForm.addEventListener('click',openEditForm);
@@ -129,8 +127,9 @@ buttonCloseEditForm.forEach(function(closeButton) {
   closeButton.addEventListener('click', closePopup)
 });
 buttonAddPhoto.addEventListener('click', openAddPhotoForm);
-initPage();
 
+//Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
+initialCards.forEach(renderCard);
 
 
 
