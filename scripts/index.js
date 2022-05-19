@@ -1,34 +1,34 @@
 //Найти все необходимые элементы формы
-const openEditFormButton = document.querySelector('.profile__edit-button');
-const closeEditFormButton = document.querySelectorAll('.popup__close');
-const addPhotoButton = document.querySelector('.profile__add-photo');
-const editPopup =  document.querySelector('#popup-edit');
-const addCardPopup =  document.querySelector('#popup-add-card');
-const picturePopup =  document.querySelector('#popup-picture');
-const nameInput = editPopup.querySelector('#name-input');
-const jobInput = editPopup.querySelector('#job-input');
-const cardName = addCardPopup.querySelector('#card-name');
-const cardLink = addCardPopup.querySelector('#card-link');
-const bigPhoto = picturePopup.querySelector('.popup__big-photo');
-const bigPhotoTitle = picturePopup.querySelector('.popup__picture-title');
-const currentName = document.querySelector('.profile__title');
-const currentJob = document.querySelector('.profile__job');
+const buttonOpenEditForm = document.querySelector('.profile__edit-button');
+const buttonCloseEditForm = document.querySelectorAll('.popup__close');
+const buttonAddPhoto = document.querySelector('.profile__add-photo');
+const formEditProfile =  document.querySelector('#popup-edit');
+const formAddPhoto =  document.querySelector('#popup-add-card');
+const formShowPhoto =  document.querySelector('#popup-picture');
+const nameInput = formEditProfile.querySelector('#name-input');
+const jobInput = formEditProfile.querySelector('#job-input');
+const cardName = formAddPhoto.querySelector('#card-name');
+const cardLink = formAddPhoto.querySelector('#card-link');
+const photoZoomed = formShowPhoto.querySelector('.popup__big-photo');
+const photoZoomedTitle = formShowPhoto.querySelector('.popup__picture-title');
+const nameCurrent = document.querySelector('.profile__title');
+const jobCurrent = document.querySelector('.profile__job');
 const cardsGrid = document.querySelector('.elements__grid');
 
-//Открыть окно редактирования
+//Открыть окно редактирования профиля
 function openEditForm () {
   //Подставить полученные значения в поля формы
-  nameInput.value = currentName.textContent;
-  jobInput.value = currentJob.textContent;
-  tooglePopup(editPopup)
+  nameInput.value = nameCurrent.textContent;
+  jobInput.value = jobCurrent.textContent;
+  openPopup(formEditProfile);
 }
 
 // Обработчик «отправки» формы редактирования
 function editFormSubmitHandler (evt) {
     evt.preventDefault();
-    currentName.textContent = nameInput.value;
-    currentJob.textContent = jobInput.value
-    tooglePopup(editPopup);
+    nameCurrent.textContent = nameInput.value;
+    jobCurrent.textContent = jobInput.value
+    closePopup(evt);
 }
 // Обработчик «отправки» формы добавления фото
 function addPhotoFormSubmitHandler (evt) {
@@ -37,57 +37,62 @@ function addPhotoFormSubmitHandler (evt) {
     name: cardName.value,
     link: cardLink.value
   };
-  tooglePopup(addCardPopup);
-  addCard(cardItem);
+  //Закрываем форму
+  closePopup(evt);
+  //Добавляем карточку, переиспользуя метод добавления карточки
+  renderCard(cardItem);
 }
 //Открыть окно добавления фото
 function openAddPhotoForm() {
-  //Сбросим значения, если они там есть. Делаем э то здесь. чтоб не писать условий в общем методе закрытия форм.
-  const inputs = addCardPopup.querySelectorAll('.popup__input');
-  inputs.forEach(function(input){
-    input.value="";
-  });
-  tooglePopup(addCardPopup);
+  //Сбросим значения, если они там есть. Делаем это здесь, чтоб не писать условий в общем методе закрытия форм.
+  const form = formAddPhoto.querySelectorAll('.popup__form');
+  if(form.length>0)
+  {
+    form[0].reset();
+  }
+  openPopup(formAddPhoto);
 }
 
-//Закрыть любой попап
-function closeForm(evt)
+//Закрыть любой попап.
+function closePopup(evt)
 {
-  const form = evt.target.closest('.popup');
-  tooglePopup(form);
+  //получаем форму, которую надо закрыть
+  const popup = evt.target.closest('.popup');
+  popup.classList.remove('popup_opened');
+  popup.classList.add('popup_closed');
 }
-//Открыть или закрыть указанный попап
-function tooglePopup(popupElement)
+//Открыть любой попап.
+function openPopup(popup)
 {
-  popupElement.classList.toggle('popup_opened');
-  //обеспечиваем анимацию закрытия попапа. поскольку при загрузке страницы у нас нет модификатора, то нельзя обойтись просто toggle
-  if(popupElement.classList.contains('popup_opened'))
-  {
-    popupElement.classList.remove('popup_closed');
-  }
-  else
-  {
-    popupElement.classList.add('popup_closed');
-  }
+  popup.classList.remove('popup_closed');
+  popup.classList.add('popup_opened');
 }
 
 //обработчик клика на лайк
 function likeButtonClickHandler(evt)
 {
-  var thisButton = evt.target;
+  const thisButton = evt.target;
   thisButton.classList.toggle('element__heart_active');
 }
 
 //обработчик клика на корзину
 function deleteButtonClickHandler(evt)
 {
-  var thisButton = evt.target;
-  var deletingElement = thisButton.closest('.element');
+  const thisButton = evt.target;
+  const deletingElement = thisButton.closest('.element');
   deletingElement.remove();
 }
 
 //Добавить карточку в грид
-function addCard(cardItem)
+function renderCard(cardItem)
+{
+  const newCard = makeCard(cardItem);
+  //Добавляем карточку в начало грида
+  cardsGrid.prepend(newCard);
+}
+
+//Подготовить карточку для добавления в грид
+function makeCard(cardItem)
 {
   const cardTemplate = document.querySelector('#grid_card').content;
   const cardLink = cardItem?.link??'#';
@@ -102,58 +107,28 @@ function addCard(cardItem)
   cardHeader.textContent = cardName;
   //Добавляем обработчики на элементы
   cardImage.addEventListener('click', function(){
-    bigPhoto.src = cardLink;
-    bigPhoto.setAttribute('alt',cardName);
-    bigPhotoTitle.textContent = cardName;
-    tooglePopup(picturePopup);
+    photoZoomed.src = cardLink;
+    photoZoomed.setAttribute('alt',cardName);
+    photoZoomedTitle.textContent = cardName;
+    openPopup(formShowPhoto);
   });
   const buttonLike = newCard.querySelector('.element__heart');
   buttonLike.addEventListener('click',likeButtonClickHandler);
   const buttonDelete = newCard.querySelector('.element__delete');
   buttonDelete.addEventListener('click',deleteButtonClickHandler);
-  cardsGrid.prepend(newCard);
+  return newCard;
 }
-//Добавить стартовые карточки
-function initPage()
-{
-  const initialCards = [
-    {
-      name: 'Вода под водой',
-      link: './image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg'
-    },
-    {
-      name: 'Северный Ледовитый океан',
-      link: './image/iceberg.jpg'
-    },
-    {
-      name: 'Атол',
-      link: './image/jcob-nasyr-hZPYwYR02Yo-unsplash.jpg'
-    },
-    {
-      name: 'Южные моря',
-      link: './image/joel-filipe-_AjqGGafofE-unsplash.jpg'
-    },
-    {
-      name: 'Пляж для звезды',
-      link: './image/linus-nylund-UCIZh0-OYPw-unsplash.jpg'
-    },
-    {
-      name: 'Большой барьерный риф',
-      link: './image/milos-prelevic-2xuiab6o-qc-unsplash.jpg'
-    }
-  ];
-
-  initialCards.forEach(addCard);
-}
+//Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
+initialCards.forEach(renderCard);
 
 //Добавить все необходимые события
-openEditFormButton.addEventListener('click',openEditForm);
-editPopup.addEventListener('submit', editFormSubmitHandler);
-addCardPopup.addEventListener('submit', addPhotoFormSubmitHandler);
-closeEditFormButton.forEach(function(closeButton) {
-  closeButton.addEventListener('click',closeForm)
+buttonOpenEditForm.addEventListener('click',openEditForm);
+formEditProfile.addEventListener('submit', editFormSubmitHandler);
+formAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
+buttonCloseEditForm.forEach(function(closeButton) {
+  closeButton.addEventListener('click', closePopup)
 });
-addPhotoButton.addEventListener('click', openAddPhotoForm);
+buttonAddPhoto.addEventListener('click', openAddPhotoForm);
 initPage();
 
 
