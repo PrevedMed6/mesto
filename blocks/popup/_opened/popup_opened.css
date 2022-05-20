@@ -1,15 +1,6 @@
-@keyframes opening {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .popup_opened {
   visibility: visible;
-  animation: opening .3s linear;
-  }
+  opacity: 1;
+}
 
 

@@ -2,15 +2,16 @@
 const buttonOpenEditForm = document.querySelector('.profile__edit-button');
 const buttonCloseEditForm = document.querySelectorAll('.popup__close');
 const buttonAddPhoto = document.querySelector('.profile__add-photo');
-const formEditProfile =  document.querySelector('#popup-edit');
-const formAddPhoto =  document.querySelector('#popup-add-card');
-const formShowPhoto =  document.querySelector('#popup-picture');
-const nameInput = formEditProfile.querySelector('#name-input');
-const jobInput = formEditProfile.querySelector('#job-input');
-const cardName = formAddPhoto.querySelector('#card-name');
-const cardLink = formAddPhoto.querySelector('#card-link');
-const photoZoomed = formShowPhoto.querySelector('.popup__big-photo');
-const photoZoomedTitle = formShowPhoto.querySelector('.popup__picture-title');
+const popupEditProfile =  document.querySelector('#popup-edit');
+const popupAddPhoto =  document.querySelector('#popup-add-card');
+const formAddPhoto = popupAddPhoto.querySelector('.popup__form');
+const popupShowPhoto =  document.querySelector('#popup-picture');
+const nameInput = popupEditProfile.querySelector('#name-input');
+const jobInput = popupEditProfile.querySelector('#job-input');
+const cardName = popupAddPhoto.querySelector('#card-name');
+const cardLink = popupAddPhoto.querySelector('#card-link');
+const photoZoomed = popupShowPhoto.querySelector('.popup__big-photo');
+const photoZoomedTitle = popupShowPhoto.querySelector('.popup__picture-title');
 const nameCurrent = document.querySelector('.profile__title');
 const jobCurrent = document.querySelector('.profile__job');
 const cardsGrid = document.querySelector('.elements__grid');
@@ -20,7 +21,7 @@ function openEditForm () {
   //Подставить полученные значения в поля формы
   nameInput.value = nameCurrent.textContent;
   jobInput.value = jobCurrent.textContent;
-  openPopup(formEditProfile);
+  openPopup(popupEditProfile);
 }
 
 // Обработчик «отправки» формы редактирования
@@ -28,7 +29,7 @@ function editFormSubmitHandler (evt) {
     evt.preventDefault();
     nameCurrent.textContent = nameInput.value;
     jobCurrent.textContent = jobInput.value
-    closePopup(evt);
+    closePopup(popupEditProfile);
 }
 // Обработчик «отправки» формы добавления фото
 function addPhotoFormSubmitHandler (evt) {
@@ -38,26 +39,27 @@ function addPhotoFormSubmitHandler (evt) {
     link: cardLink.value
   };
   //Закрываем форму
-  closePopup(evt);
+  closePopup(popupAddPhoto);
   //Добавляем карточку, переиспользуя метод добавления карточки
-  renderCard(cardItem);
+  renderCard(cardItem, true);
 }
 //Открыть окно добавления фото
 function openAddPhotoForm() {
   //Сбросим значения, если они там есть. Делаем это здесь, чтоб не писать условий в общем методе закрытия форм.
-  const form = formAddPhoto.querySelectorAll('.popup__form');
-  if(form.length>0)
-  {
-    form[0].reset();
-  }
-  openPopup(formAddPhoto);
+  formAddPhoto.reset();
+  openPopup(popupAddPhoto);
+}
+
+function openShowPhotoForm(cardLink, cardName) {
+  photoZoomed.src = cardLink;
+  photoZoomed.setAttribute('alt',cardName);
+  photoZoomedTitle.textContent = cardName;
+  openPopup(popupShowPhoto);
 }
 
 //Закрыть любой попап.
-function closePopup(evt)
+function closePopup(popup)
 {
-  //получаем форму, которую надо закрыть
-  const popup = evt.target.closest('.popup');
   popup.classList.remove('popup_opened');
   popup.classList.add('popup_closed');
 }
@@ -84,11 +86,15 @@ function deleteButtonClickHandler(evt)
 }
 
 //Добавить карточку в грид
-function renderCard(cardItem)
+function renderCard(cardItem, isPrepend = false)
 {
   const newCard = makeCard(cardItem);
-  //Добавляем карточку в начало грида
-  cardsGrid.prepend(newCard);
+  if(isPrepend) {
+    cardsGrid.prepend(newCard);
+  }
+  else {
+    cardsGrid.append(newCard);
+  }
 }
 
 //Подготовить карточку для добавления в грид
@@ -106,11 +112,8 @@ function makeCard(cardItem)
   cardHeader.setAttribute('title', cardName);
   cardHeader.textContent = cardName;
   //Добавляем обработчики на элементы
-  cardImage.addEventListener('click', function(){
-    photoZoomed.src = cardLink;
-    photoZoomed.setAttribute('alt',cardName);
-    photoZoomedTitle.textContent = cardName;
-    openPopup(formShowPhoto);
+  cardImage.addEventListener('click', ()=>{
+    openShowPhotoForm(cardLink, cardName);
   });
   const buttonLike = newCard.querySelector('.element__heart');
   buttonLike.addEventListener('click',likeButtonClickHandler);
@@ -121,15 +124,20 @@ function makeCard(cardItem)
 
 //Добавить все необходимые события
 buttonOpenEditForm.addEventListener('click',openEditForm);
-formEditProfile.addEventListener('submit', editFormSubmitHandler);
-formAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
-buttonCloseEditForm.forEach(function(closeButton) {
-  closeButton.addEventListener('click', closePopup)
+popupEditProfile.addEventListener('submit', editFormSubmitHandler);
+popupAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
+buttonCloseEditForm.forEach((closeButton) => {
+    closeButton.addEventListener('click', (evt)=>{
+      const popup = evt.target.closest('.popup');
+      closePopup(popup);
+  });
 });
 buttonAddPhoto.addEventListener('click', openAddPhotoForm);
 
 //Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
-initialCards.forEach(renderCard);
+initialCards.forEach((cardItem) => {
+  renderCard(cardItem)
+});
 
 
 
