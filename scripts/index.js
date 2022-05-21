@@ -61,13 +61,11 @@ function openShowPhotoForm(cardLink, cardName) {
 function closePopup(popup)
 {
   popup.classList.remove('popup_opened');
-  popup.classList.add('popup_closed');
-}
+ }
 //Открыть любой попап.
 function openPopup(popup)
 {
-  popup.classList.remove('popup_closed');
-  popup.classList.add('popup_opened');
+   popup.classList.add('popup_opened');
 }
 
 //обработчик клика на лайк
