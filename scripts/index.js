@@ -59,6 +59,15 @@ function clickGridHandler(evt) {
     deleteButtonClick(thisButton);
   }
 }
+//Закрытие попапа по наэатию на esc
+function pressEscapeHandler(evt)
+{
+  if(evt.key === 'Escape')
+  {
+    const popup =  document.querySelector('.popup_opened');
+    closePopup(popup);
+  }
+}
 
 //Открыть окно добавления фото
 function openAddPhotoForm() {
@@ -76,10 +85,12 @@ function openShowPhotoForm(cardLink, cardName) {
 
 //Закрыть любой попап.
 function closePopup(popup) {
+  document.removeEventListener('keydown', pressEscapeHandler);
   popup.classList.remove('popup_opened');
 }
 //Открыть любой попап.
 function openPopup(popup) {
+  document.addEventListener('keydown', pressEscapeHandler);
    popup.classList.add('popup_opened');
 }
 
@@ -142,16 +153,7 @@ popupsList.forEach((popup) => {
     }
   });
 });
-document.addEventListener('keydown', function (evt) {
-  if(evt.key === 'Escape')
-  {
-    const popup =  document.querySelector('.popup_opened');
-    if(popup)
-    {
-      closePopup(popup);
-    }
-  }
-});
+
 cardsGrid.addEventListener('click', clickGridHandler);
 //Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
 initialCards.forEach((cardItem) => {
