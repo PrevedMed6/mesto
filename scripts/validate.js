@@ -7,14 +7,14 @@ function enableValidation(settings)
   const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList))
     {
-      if(!buttonElement.classList.contains(settings.inactiveButtonClass))
+      if (!buttonElement.classList.contains(settings.inactiveButtonClass))
       {
-        buttonElement.classList.add(settings.inactiveButtonClass);
+        disableButton(buttonElement);
       }
     }
     else
     {
-      buttonElement.classList.remove(settings.inactiveButtonClass);
+      enableButton(buttonElement)
     }
   };
 
@@ -51,18 +51,34 @@ function enableValidation(settings)
     }
   };
 
+  //Удалить указанный класс с элементов
   const clearElements = (elements, className)=>{
     elements.forEach((span)=>{
       span.classList.remove(className);
     });
   };
+
+  //Почистить форму от ошибок
   const cleanErrors=(form, buttonElement)=>{
     const activeErrors = form.querySelectorAll(`.${settings.errorClass}`);
     const errorInputs = form.querySelectorAll(`.${settings.inputErrorClass}`);
     clearElements(activeErrors, settings.errorClass);
     clearElements(errorInputs, settings.inputErrorClass);
-    buttonElement.classList.add(settings.inactiveButtonClass);
+    disableButton(buttonElement);
   };
+
+  //деактивировать кнопку
+  function disableButton(button)
+  {
+    button.classList.add(settings.inactiveButtonClass);
+    button.setAttribute('disabled','disabled');
+  }
+  //активировать кнопку
+  function enableButton(button)
+  {
+    button.classList.remove(settings.inactiveButtonClass);
+    button.removeAttribute('disabled');
+  }
 
   //Настроить валидацию формы
   const setupFormValidation = (form)=>{

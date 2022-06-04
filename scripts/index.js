@@ -49,19 +49,6 @@ function addPhotoFormSubmitHandler (evt) {
   renderCard(cardItem, true);
 }
 
-//Обработчик клика по гриду с карточками
-function clickGridHandler(evt) {
-  const thisButton = evt.target;
-  if(thisButton.classList.contains('element__heart'))
-  {
-    likeButtonClick(thisButton)
-  }
-  else if (thisButton.classList.contains('element__delete'))
-  {
-    deleteButtonClick(thisButton);
-  }
-}
-
 //Закрытие попапа по наэатию на esc
 function pressEscapeHandler(evt){
   if(evt.key === 'Escape')
@@ -69,6 +56,21 @@ function pressEscapeHandler(evt){
     const popup =  document.querySelector('.popup_opened');
     closePopup(popup);
   }
+}
+
+//обработчик клика на лайк
+function likeButtonClickHandler(evt)
+{
+  const thisButton = evt.target;
+  thisButton.classList.toggle('element__heart_active');
+}
+
+//обработчик клика на корзину
+function deleteButtonClickHandler(evt)
+{
+  const thisButton = evt.target;
+  const deletingElement = thisButton.closest('.element');
+  deletingElement.remove();
 }
 
 //Обработчик закрытия попапа
@@ -148,10 +150,13 @@ function makeCard(cardItem)
   const cardHeader = newCard.querySelector('.element__title-text');
   cardHeader.setAttribute('title', cardName);
   cardHeader.textContent = cardName;
-  //Этот обработчик не выносим, чтоб получить ссылку и имя из внешней области видимости
   cardImage.addEventListener('click', ()=>{
     openShowPhotoForm(cardLink, cardName);
   });
+  const buttonLike = newCard.querySelector('.element__heart');
+  buttonLike.addEventListener('click',likeButtonClickHandler);
+  const buttonDelete = newCard.querySelector('.element__delete');
+  buttonDelete.addEventListener('click',deleteButtonClickHandler);
   return newCard;
 }
 
@@ -163,7 +168,6 @@ formAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
 popupShowPhoto.addEventListener('click', clickPopupHandler);
 popupAddPhoto.addEventListener('click', clickPopupHandler);
 popupEditProfile.addEventListener('click', clickPopupHandler);
-cardsGrid.addEventListener('click', clickGridHandler);
 
 //Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
 initialCards.forEach((cardItem) => {
