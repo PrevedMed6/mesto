@@ -21,6 +21,8 @@ const cardLink = formAddPhoto.elements.cardLink;
 
 //Открыть окно редактирования профиля
 function openEditForm () {
+  //Сбросим ошибки, если они есть. Делаем это здесь, т.к. при закрытии есть задержка (анимация) и видно, как дергаются поля
+  formEditProfile.reset();
   //Подставить полученные значения в поля формы
   nameInput.value = nameCurrent.textContent;
   jobInput.value = jobCurrent.textContent;
@@ -59,9 +61,9 @@ function clickGridHandler(evt) {
     deleteButtonClick(thisButton);
   }
 }
+
 //Закрытие попапа по наэатию на esc
-function pressEscapeHandler(evt)
-{
+function pressEscapeHandler(evt){
   if(evt.key === 'Escape')
   {
     const popup =  document.querySelector('.popup_opened');
@@ -69,9 +71,23 @@ function pressEscapeHandler(evt)
   }
 }
 
+//Обработчик закрытия попапа
+function clickPopupHandler(evt) {
+  const target = evt.target;
+  if (ifNeedToClose(target))
+  {
+    closePopup(evt.currentTarget);
+  }
+}
+
+function ifNeedToClose(element){
+  return element.classList.contains('popup__close')
+  || element.classList.contains('popup_opened');
+}
+
 //Открыть окно добавления фото
 function openAddPhotoForm() {
-  //Сбросим значения, если они там есть. Делаем это здесь, чтоб не писать условий в общем методе закрытия форм.
+  //Сбросим ошибки, если они есть. Делаем это здесь, т.к. при закрытии есть задержка (анимация) и видно, как дергаются поля
   formAddPhoto.reset();
   openPopup(popupAddPhoto);
 }
@@ -132,7 +148,7 @@ function makeCard(cardItem)
   const cardHeader = newCard.querySelector('.element__title-text');
   cardHeader.setAttribute('title', cardName);
   cardHeader.textContent = cardName;
-  //Добавляем обработчики на элементы
+  //Этот обработчик не выносим, чтоб получить ссылку и имя из внешней области видимости
   cardImage.addEventListener('click', ()=>{
     openShowPhotoForm(cardLink, cardName);
   });
@@ -142,22 +158,26 @@ function makeCard(cardItem)
 //Добавить все необходимые события
 buttonOpenEditForm.addEventListener('click', openEditForm);
 buttonAddPhoto.addEventListener('click', openAddPhotoForm);
-popupEditProfile.addEventListener('submit', editFormSubmitHandler);
-popupAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
-popupsList.forEach((popup) => {
-  popup.addEventListener('click', (evt)=>{
-    const target = evt.target;
-    if(target.classList.contains('popup__close') || target.classList.contains('popup_opened'))
-    {
-      closePopup(popup);
-    }
-  });
-});
-
+formEditProfile.addEventListener('submit', editFormSubmitHandler);
+formAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
+popupShowPhoto.addEventListener('click', clickPopupHandler);
+popupAddPhoto.addEventListener('click', clickPopupHandler);
+popupEditProfile.addEventListener('click', clickPopupHandler);
 cardsGrid.addEventListener('click', clickGridHandler);
+
 //Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
 initialCards.forEach((cardItem) => {
   renderCard(cardItem);
+});
+
+//Включить валидацию
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
 });
 
 
