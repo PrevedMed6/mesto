@@ -1,4 +1,4 @@
-const initialCards = [
+export const initialCards = [
   {
     name: 'Вода под водой',
     link: './image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg'
