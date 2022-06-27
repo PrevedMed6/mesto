@@ -58,22 +58,6 @@ export class FormValidator
     }
   };
 
-  //Удалить указанный класс с элементов
-  _clearElements(elements, className) {
-    elements.forEach((span)=>{
-      span.classList.remove(className);
-    });
-  };
-
-  //Почистить форму от ошибок
-  _cleanErrors() {
-    const activeErrors = this._formElement.querySelectorAll(`.${this._errorClass}`);
-    const errorInputs = this._formElement.querySelectorAll(`.${this._inputErrorClass}`);
-    this._clearElements(activeErrors, this._errorClass);
-    this._clearElements(errorInputs, this._inputErrorClass);
-    this._disableButton();
-  };
-
   //деактивировать кнопку
   _disableButton() {
     this._submitButton.classList.add(this._inactiveButtonClass);
@@ -83,6 +67,15 @@ export class FormValidator
   _enableButton() {
     this._submitButton.classList.remove(this._inactiveButtonClass);
     this._submitButton.removeAttribute('disabled');
+  }
+
+  //Почистить форму от ошибок
+  cleanErrors() {
+    this._formInputsList.forEach(inputElement => {
+      const errorSpan = this._formElement.querySelector(`#${inputElement.id}-error`);
+      this._hideError(inputElement,errorSpan);
+    });
+    this._disableButton();
   }
 
   //Настроить валидацию формы
@@ -97,6 +90,5 @@ export class FormValidator
       this._toggleButtonState();
       }
     ));
-    this._formElement.addEventListener('reset', ()=>this._cleanErrors());
   }
 }

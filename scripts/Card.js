@@ -3,7 +3,7 @@ import {photoZoomed, photoZoomedTitle, popupShowPhoto, openPopup} from './utils.
 
 export class Card {
   constructor (dataItem, selectors){
-    this._name = dataItem?._name ?? 'Картинка без названия';;
+    this._name = dataItem?.name ?? 'Картинка без названия';;
     this._link = dataItem?.link ?? '#';
     this._templateSelector = selectors.templateSelector;
     this._listElementSelector = selectors.listElementSelector;
@@ -42,15 +42,12 @@ export class Card {
       openPopup(popupShowPhoto);
     });
     //Обработка лайка
-    this._buttonLike.addEventListener('click',(evt)=>{
-      const thisButton = evt.target;
-      thisButton.classList.toggle(this._activeLikeClass);
+    this._buttonLike.addEventListener('click',()=>{
+      this._buttonLike.classList.toggle(this._activeLikeClass);
     });
     //удалить элемент
-    this._buttonDelete.addEventListener('click',(evt)=>{
-      const thisButton = evt.target;
-      const deletingElement = thisButton.closest(this._listElementSelector);
-      deletingElement.remove();
+    this._buttonDelete.addEventListener('click',()=>{
+      this._card.remove();
     });
   }
 
