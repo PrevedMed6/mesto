@@ -1,112 +1,90 @@
 //Подключаем необходимые импорты
-import {initialCards} from './data.js';
-import {validationSelectors, gridCardSelectors, popupShowPhoto, openPopup, closePopup} from './utils.js';
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
+import {
+  initialCards,
+  cardsGridSelector,
+  validationSelectors,
+  gridCardSelectors,
+  popupShowPhotoSelector,
+  popupAddPhotoSelector,
+  popupEditProfileSelector,
+  nameCurrentSelector,
+  jobCurrentSelector,
+  buttonOpenEditForm,
+  buttonAddPhoto,
+} from './utils/constants.js';
+import {Card} from './components/Card.js';
+import {UserInfo} from './components/UserInfo.js';
+import {Section} from './components/Section.js';
+import {PopupWithForm, PopupWithImage} from './components/Popup.js';
+import {FormValidator} from './components/FormValidator.js';
 
-//Найти все необходимые элементы страницы
-const buttonOpenEditForm = document.querySelector('.profile__edit-button');
-const buttonAddPhoto = document.querySelector('.profile__add-photo');
-const popupEditProfile =  document.querySelector('#popup-edit');
-const popupAddPhoto =  document.querySelector('#popup-add-card');
-const nameCurrent = document.querySelector('.profile__title');
-const jobCurrent = document.querySelector('.profile__job');
-const cardsGrid = document.querySelector('.elements__grid');
-
-//Элементы форм
-const formEditProfile = document.forms.editForm;
-const nameInput = formEditProfile.elements.nameInput;
-const jobInput = formEditProfile.elements.jobInput;
-const formAddPhoto = document.forms.addCardForm;
-const cardName = formAddPhoto.elements.cardName;
-const cardLink = formAddPhoto.elements.cardLink;
-
-//Открыть окно редактирования профиля
-function openEditForm () {
-  profileValidation.cleanErrors();
-  //Подставить полученные значения в поля формы
-  nameInput.value = nameCurrent.textContent;
-  jobInput.value = jobCurrent.textContent;
-  openPopup(popupEditProfile);
-}
-
-// Обработчик «отправки» формы редактирования
-function editFormSubmitHandler (evt) {
+//Информация о пользователях
+const userInfo = new UserInfo(nameCurrentSelector,jobCurrentSelector);
+//Создаем попапы
+const popupShowPhoto = new PopupWithImage(popupShowPhotoSelector);
+popupShowPhoto.setEventListeners();
+const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,(evt)=>{
     evt.preventDefault();
-    nameCurrent.textContent = nameInput.value;
-    jobCurrent.textContent = jobInput.value
-    closePopup(popupEditProfile);
-}
-// Обработчик «отправки» формы добавления фото
-function addPhotoFormSubmitHandler (evt) {
-  evt.preventDefault();
-  const cardItem = {
-    name: cardName.value,
-    link: cardLink.value
-  };
-  //Закрываем форму
-  closePopup(popupAddPhoto);
-  //Добавляем карточку, переиспользуя метод добавления карточки
-  const newCard = createCard(cardItem);
-  renderCard(newCard, true);
-}
-
-//Обработчик закрытия попапа
-function clickPopupHandler(evt) {
-  const target = evt.target;
-  if (ifNeedToClose(target))
-  {
-    closePopup(evt.currentTarget);
+    const cardItem = popupAddPhoto._getInputValues();
+    cardSection.addItem(cardItem, true);
+    popupAddPhoto.close();
   }
-}
-
-function ifNeedToClose(element){
-  return element.classList.contains('popup__close')
-  || element.classList.contains('popup_opened');
-}
-
-//Открыть окно добавления фото
-function openAddPhotoForm() {
-  //Сбросим ошибки, если они есть
-  formAddPhoto.reset();
-  newCardValidation.cleanErrors();
-  openPopup(popupAddPhoto);
-}
+);
+popupAddPhoto.setEventListeners();
+const popupEditProfile = new PopupWithForm(popupEditProfileSelector,(evt)=>{
+    evt.preventDefault();
+    const newUserInfo = popupEditProfile._getInputValues();
+    userInfo.setUserInfo(newUserInfo);
+    popupEditProfile.close();
+  }
+);
+popupEditProfile.setEventListeners();
+//создаем экземпляр грида и добавляем в него карточки.
+const cardSection = new Section(
+  {
+    items: initialCards,
+    renderer: (item, isPrepend = false)=>{
+      const newCard = createCard(item);
+      if(isPrepend) {
+        cardSection._container.prepend(newCard);
+      }
+      else {
+        cardSection._container.append(newCard);
+      }
+    }
+  },
+  cardsGridSelector
+);
+cardSection.renderItems();
 
 //Создать карточку
 function createCard(cardItem)
 {
-  const newCard = new Card(cardItem, gridCardSelectors).getCard();
+  const newCard = new Card(
+    {
+      dataItem: cardItem,
+      handleCardClick: popupShowPhoto.open.bind(popupShowPhoto)
+    },
+    gridCardSelectors).getCard();
   return newCard;
-}
-//Добавить карточку в грид
-function renderCard(newCard, isPrepend = false)
-{
-   if(isPrepend) {
-    cardsGrid.prepend(newCard);
-  }
-  else {
-    cardsGrid.append(newCard);
-  }
 }
 
 //Добавить все необходимые события
-buttonOpenEditForm.addEventListener('click', openEditForm);
-buttonAddPhoto.addEventListener('click', openAddPhotoForm);
-formEditProfile.addEventListener('submit', editFormSubmitHandler);
-formAddPhoto.addEventListener('submit', addPhotoFormSubmitHandler);
-popupShowPhoto.addEventListener('click', clickPopupHandler);
-popupAddPhoto.addEventListener('click', clickPopupHandler);
-popupEditProfile.addEventListener('click', clickPopupHandler);
-
-//Для каждого элемента массива карточек выполняем добавление карточки, передавая элемент массива в метод renderCard.
-initialCards.forEach((cardItem) => {
-  const newCard = createCard(cardItem);
-  renderCard(newCard);
+buttonOpenEditForm.addEventListener('click', ()=>{
+  profileValidation.cleanErrors();
+  const info = userInfo.getUserInfo();
+  nameInput.value = info.name;
+  jobInput.value = info.job;
+  popupEditProfile.open();
 });
+buttonAddPhoto.addEventListener('click', ()=>{
+  newCardValidation.cleanErrors();
+  popupAddPhoto.open();
+});
+
  //Настроить валидацию всех форм
- const profileValidation = new FormValidator(validationSelectors, formEditProfile);
- const newCardValidation = new FormValidator(validationSelectors, formAddPhoto);
+ const profileValidation = new FormValidator(validationSelectors, popupEditProfile.form);
+ const newCardValidation = new FormValidator(validationSelectors, popupAddPhoto.form);
  profileValidation.enableValidation();
  newCardValidation.enableValidation();
 

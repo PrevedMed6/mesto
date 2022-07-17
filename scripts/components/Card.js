@@ -1,8 +1,5 @@
-//Импорты констант и утилит
-import {photoZoomed, photoZoomedTitle, popupShowPhoto, openPopup} from './utils.js';
-
 export class Card {
-  constructor (dataItem, selectors){
+  constructor ({dataItem, handleCardClick}, selectors){
     this._name = dataItem?.name ?? 'Картинка без названия';;
     this._link = dataItem?.link ?? '#';
     this._templateSelector = selectors.templateSelector;
@@ -12,6 +9,7 @@ export class Card {
     this._likeSelector = selectors.likeSelector;
     this._activeLikeClass = selectors.activeLikeClass;
     this._deleteSelector = selectors.deleteSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   //Получаем дом документы
@@ -36,10 +34,7 @@ export class Card {
   _addEventListeners() {
     //Открытие попапа
     this._cardImage.addEventListener('click', ()=>{
-      photoZoomed.src = this._link;
-      photoZoomed.setAttribute('alt',this._name);
-      photoZoomedTitle.textContent = this._name;
-      openPopup(popupShowPhoto);
+      this._handleCardClick({link: this._link, name: this._name});
     });
     //Обработка лайка
     this._buttonLike.addEventListener('click',()=>{

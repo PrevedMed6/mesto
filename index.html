@@ -13,9 +13,9 @@
         <h2 class="popup__heading">Редактировать профиль</h2>
         <form class="popup__form" name="editForm" novalidate>
           <fieldset class="popup__input-container">
-            <input type="text" class="popup__input" name="nameInput" id="nameInput" placeholder = "Как вас зовут?" minlength="2" maxlength="40" required>
+            <input type="text" class="popup__input" name="name" id="nameInput" placeholder = "Как вас зовут?" minlength="2" maxlength="40" required>
             <span class="popup__error" id="nameInput-error"></span>
-            <input type="text" class="popup__input" name="jobInput" id="jobInput" placeholder="Чем вы занимаетесь?"  minlength="2" maxlength="200" required>
+            <input type="text" class="popup__input" name="job" id="jobInput" placeholder="Чем вы занимаетесь?"  minlength="2" maxlength="200" required>
             <span class="popup__error" id="jobInput-error"></span>
           </fieldset>
           <button type="submit" class="popup__button">Отправить</button>
@@ -28,9 +28,9 @@
         <h2 class="popup__heading">Новое место</h2>
         <form class="popup__form" name="addCardForm" novalidate>
           <fieldset class="popup__input-container">
-            <input type="text" class="popup__input" name="cardName" id="cardName" placeholder = "Название"  minlength="2" maxlength="30" required>
+            <input type="text" class="popup__input" name="name" id="cardName" placeholder = "Название"  minlength="2" maxlength="30" required>
             <span class="popup__error" id="cardName-error"></span>
-            <input type="url" class="popup__input" name="cardLink" id="cardLink" placeholder="Ссылка на картинку" required>
+            <input type="url" class="popup__input" name="link" id="cardLink" placeholder="Ссылка на картинку" required>
             <span class="popup__error" id="cardLink-error"></span>
           </fieldset>
           <button type="submit" class="popup__button popup__button_disabled">Создать</button>
