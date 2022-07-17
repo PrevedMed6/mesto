@@ -1,27 +1,34 @@
+import waterUnderWaterImage from '../../image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg';
+import icebergImage from '../../image/iceberg.jpg';
+import atollImage from '../../image/jcob-nasyr-hZPYwYR02Yo-unsplash.jpg';
+import southSeasImage from '../../image/joel-filipe-_AjqGGafofE-unsplash.jpg';
+import starImage from '../../image/linus-nylund-UCIZh0-OYPw-unsplash.jpg';
+import greatBarrierReefImage from '../../image/milos-prelevic-2xuiab6o-qc-unsplash.jpg';
+
 export const initialCards = [
   {
     name: 'Вода под водой',
-    link: './image/boxed-water-is-better-R98l5I6OFQY-unsplash.jpg'
+    link: waterUnderWaterImage
   },
   {
     name: 'Северный Ледовитый океан',
-    link: './image/iceberg.jpg'
+    link: icebergImage
   },
   {
-    name: 'Атол',
-    link: './image/jcob-nasyr-hZPYwYR02Yo-unsplash.jpg'
+    name: 'Атолл',
+    link: atollImage
   },
   {
     name: 'Южные моря',
-    link: './image/joel-filipe-_AjqGGafofE-unsplash.jpg'
+    link: southSeasImage
   },
   {
     name: 'Пляж для звезды',
-    link: './image/linus-nylund-UCIZh0-OYPw-unsplash.jpg'
+    link: starImage
   },
   {
     name: 'Большой барьерный риф',
-    link: './image/milos-prelevic-2xuiab6o-qc-unsplash.jpg'
+    link: greatBarrierReefImage
   }
 ];
 

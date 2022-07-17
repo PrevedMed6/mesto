@@ -1,4 +1,5 @@
 //Подключаем необходимые импорты
+import '../pages/index.css';
 import {
   initialCards,
   cardsGridSelector,
