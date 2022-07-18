@@ -40,11 +40,8 @@ export const nameCurrentSelector = '.profile__title';
 export const jobCurrentSelector = '.profile__job';
 
 //Найти все необходимые элементы страницы
-const popupShowPhoto =  document.querySelector('#popup-picture');
 export const buttonOpenEditForm = document.querySelector('.profile__edit-button');
 export const buttonAddPhoto = document.querySelector('.profile__add-photo');
-export const photoZoomed = popupShowPhoto.querySelector('.popup__big-photo');
-export const photoZoomedTitle = popupShowPhoto.querySelector('.popup__picture-title');
 
 //селекторы для валидации
 export const validationSelectors = {

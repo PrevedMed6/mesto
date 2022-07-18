@@ -69,6 +69,16 @@ export class FormValidator
     this._submitButton.removeAttribute('disabled');
   }
 
+  _setEventListeners() {
+    this._formElement.addEventListener('input',((evt)=>{
+      const input = evt.target;
+      const errorSpan = this._formElement.querySelector(`#${input.id}-error`);
+      this._IsValid(input, errorSpan);
+      this._toggleButtonState();
+      }
+    ));
+  }
+
   //Почистить форму от ошибок
   cleanErrors() {
     this._formInputsList.forEach(inputElement => {
@@ -83,12 +93,6 @@ export class FormValidator
     this._formInputsList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
     this._toggleButtonState();
-    this._formElement.addEventListener('input',((evt)=>{
-      const input = evt.target;
-      const errorSpan = this._formElement.querySelector(`#${input.id}-error`);
-      this._IsValid(input, errorSpan);
-      this._toggleButtonState();
-      }
-    ));
+    this._setEventListeners();
   }
 }

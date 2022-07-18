@@ -16,7 +16,8 @@ import {
 import {Card} from './components/Card.js';
 import {UserInfo} from './components/UserInfo.js';
 import {Section} from './components/Section.js';
-import {PopupWithForm, PopupWithImage} from './components/Popup.js';
+import {PopupWithImage} from './components/PopupWithImage.js';
+import {PopupWithForm} from './components/PopupWithForm.js';
 import {FormValidator} from './components/FormValidator.js';
 
 //Информация о пользователях
@@ -26,7 +27,7 @@ const popupShowPhoto = new PopupWithImage(popupShowPhotoSelector);
 popupShowPhoto.setEventListeners();
 const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,(evt)=>{
     evt.preventDefault();
-    const cardItem = popupAddPhoto._getInputValues();
+    const cardItem = popupAddPhoto.getInputValues();
     cardSection.addItem(cardItem, true);
     popupAddPhoto.close();
   }
@@ -34,7 +35,7 @@ const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,(evt)=>{
 popupAddPhoto.setEventListeners();
 const popupEditProfile = new PopupWithForm(popupEditProfileSelector,(evt)=>{
     evt.preventDefault();
-    const newUserInfo = popupEditProfile._getInputValues();
+    const newUserInfo = popupEditProfile.getInputValues();
     userInfo.setUserInfo(newUserInfo);
     popupEditProfile.close();
   }
