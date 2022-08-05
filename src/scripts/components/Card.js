@@ -22,12 +22,12 @@ export class Card {
   //Получаем дом элементы
   _getTemplate() {
     const cardTemplate = document.querySelector(this._templateSelector).content;
-    this.card = cardTemplate.querySelector(this._listElementSelector).cloneNode(true);
-    this._cardImage = this.card.querySelector(this._imageContainer);
-    this._cardHeader = this.card.querySelector(this._titleSelector);
-    this._buttonLike = this.card.querySelector(this._likeSelector);
-    this._buttonDelete = this.card.querySelector(this._deleteSelector);
-    this._spanLikes = this.card.querySelector(this._likesCountSelector);
+    this._card = cardTemplate.querySelector(this._listElementSelector).cloneNode(true);
+    this._cardImage = this._card.querySelector(this._imageContainer);
+    this._cardHeader = this._card.querySelector(this._titleSelector);
+    this._buttonLike = this._card.querySelector(this._likeSelector);
+    this._buttonDelete = this._card.querySelector(this._deleteSelector);
+    this._spanLikes = this._card.querySelector(this._likesCountSelector);
   }
 
   //установка данных
@@ -64,9 +64,12 @@ export class Card {
     this._getTemplate();
     this._setCardData();
     this._addEventListeners();
-    return this.card;
+    return this._card;
   }
-
+  deleteCard()
+  {
+    this._card.remove();
+  }
   setLikesSection(res){
     this._likesCount = res.likes?.length ?? 0;
     this._ifILikeIt = res.likes?.some((like)=>{return like._id === this._me});

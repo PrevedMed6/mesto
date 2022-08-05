@@ -12,7 +12,7 @@ export class FormValidator
 
   //переключить состояние кнопки в зависимости от состояния полей ввода
   _toggleButtonState() {
-    if (this._hasInvalidInput(this._inputList))
+    if (this._hasInvalidInput())
     {
       if (!this._submitButton.classList.contains(this._inactiveButtonClass))
       {

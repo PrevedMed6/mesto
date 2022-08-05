@@ -10,25 +10,30 @@ export class PopupWithForm extends Popup {
     this._submitButtonText = submitButtonText;
   }
 
-  getInputValues(){
+  _getInputValues(){
     this._formValues = {};
     this._inputList.forEach(input => {
       this._formValues[input.name] = input.value;
     });
     return this._formValues;
   }
-
+  _setWaitingText(){
+    this._submitButton.textContent = this._waitngText;
+  }
   close(){
     super.close();
     this.form.reset();
-    this._submitButton.textContent = this._submitButtonText;
   }
   setEventListeners(){
-    this.form.addEventListener('submit', this._submitCallBack.bind(this));
+    this.form.addEventListener('submit', (evt)=>{
+      evt.preventDefault();
+      this._setWaitingText();
+      this._submitCallBack(this._getInputValues());
+    });
     super.setEventListeners();
   }
 
-  setWaitingText(){
-    this._submitButton.textContent = this._waitngText;
+  setNormalText(){
+    this._submitButton.textContent = this._submitButtonText;
   }
 }
