@@ -8,11 +8,13 @@ import {
   popupAddPhotoSelector,
   popupConfirmSelector,
   popupEditProfileSelector,
+  popupEditAvatarSelector,
   nameCurrentSelector,
   jobCurrentSelector,
   avatarSelector,
   buttonOpenEditForm,
   buttonAddPhoto,
+  buttonEditAvatar
 } from './utils/constants.js';
 import {Card} from './components/Card.js';
 import {UserInfo} from './components/UserInfo.js';
@@ -45,10 +47,13 @@ const popupConfirm = new PopupConfirm(popupConfirmSelector,()=>{
   });
 });
 popupConfirm.setEventListeners();
+
 const popupShowPhoto = new PopupWithImage(popupShowPhotoSelector);
 popupShowPhoto.setEventListeners();
-const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,(evt)=>{
+
+const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,'Создать',(evt)=>{
     evt.preventDefault();
+    popupAddPhoto.setWaitingText();
     const cardItem = popupAddPhoto.getInputValues();
     api.addNewCard(cardItem.name, cardItem.link)
     .then((res)=>{
@@ -61,8 +66,10 @@ const popupAddPhoto = new PopupWithForm(popupAddPhotoSelector,(evt)=>{
   }
 );
 popupAddPhoto.setEventListeners();
-const popupEditProfile = new PopupWithForm(popupEditProfileSelector,(evt)=>{
+
+const popupEditProfile = new PopupWithForm(popupEditProfileSelector,'Отправить',(evt)=>{
     evt.preventDefault();
+    popupEditProfile.setWaitingText();
     const newUserInfo = popupEditProfile.getInputValues();
     api.setUserInfo(newUserInfo.name, newUserInfo.job).then((result)=>{
       userInfo.setUserInfo({name: result.name, job: result.about, avatar: result.avatar});
@@ -74,6 +81,20 @@ const popupEditProfile = new PopupWithForm(popupEditProfileSelector,(evt)=>{
   }
 );
 popupEditProfile.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm(popupEditAvatarSelector,'Сохранить',(evt)=>{
+  evt.preventDefault();
+  popupEditAvatar.setWaitingText();
+  const newAvatar = popupEditAvatar.getInputValues();
+  api.editAvatar(newAvatar.avatar).then((result)=>{
+    userInfo.setUserInfo({name: result.name, job: result.about, avatar: result.avatar});
+  }).catch((err)=>{
+    console.log(err)
+  }).finally(()=>{
+    popupEditAvatar.close();
+  });
+});
+popupEditAvatar.setEventListeners();
 
 //Добавить все необходимые события
 buttonOpenEditForm.addEventListener('click', ()=>{
@@ -87,12 +108,17 @@ buttonAddPhoto.addEventListener('click', ()=>{
   newCardValidation.cleanErrors();
   popupAddPhoto.open();
 });
-
+buttonEditAvatar.addEventListener('click', ()=>{
+  newAvatarValidation.cleanErrors();
+  popupEditAvatar.open();
+});
  //Настроить валидацию всех форм
  const profileValidation = new FormValidator(validationSelectors, popupEditProfile.form);
  const newCardValidation = new FormValidator(validationSelectors, popupAddPhoto.form);
+ const newAvatarValidation = new FormValidator(validationSelectors, popupEditAvatar.form);
  profileValidation.enableValidation();
  newCardValidation.enableValidation();
+ newAvatarValidation.enableValidation();
 
  //создаем экземпляр грида и добавляем в него карточки.
 function drowCards()
@@ -128,19 +154,12 @@ function createCard(cardItem)
       dataItem: cardItem,
       handleCardClick: popupShowPhoto.open.bind(popupShowPhoto),
       handleLikeClick: ()=>{
-        let method = 'DELETE';
-        if(!newCard._ifILikeIt)
-        {
-          method = 'PUT';
-        }
+        const method = !newCard.IfILikeIt()? 'PUT':'DELETE';
         api.toggleLikes(newCard.cardId,method).then((res)=>{
-          newCard._likesCount = res.likes?.length ?? 0;
-          newCard._ifILikeIt = res.likes?.some((like)=>{return like._id === me});
-          newCard._spanLikes.textContent = newCard._likesCount;
-          newCard._buttonLike.classList.toggle(newCard._activeLikeClass);
+          newCard.setLikesSection(res);
         }).catch((err)=>{
           console.log(err);
-          });
+        });
       }
     },
     gridCardSelectors,

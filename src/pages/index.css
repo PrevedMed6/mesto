@@ -15,6 +15,7 @@
 /*Блок profile*/
 @import url(../blocks/profile/profile.css);
 @import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__avatar-picture/profile__avatar-picture.css);
 @import url(../blocks/profile/__add-photo/profile__add-photo.css);
 @import url(../blocks/profile/__info/profile__info.css);
 @import url(../blocks/profile/__text/profile__text.css);

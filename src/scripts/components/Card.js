@@ -16,6 +16,7 @@ export class Card {
     this._handleLikeClick = handleLikeClick;
     this._isMyCard = dataItem.owner._id === me;
     this._ifILikeIt = dataItem.likes?.some((like)=>{return like._id === me});
+    this._me = me;
   }
 
   //Получаем дом элементы
@@ -64,5 +65,16 @@ export class Card {
     this._setCardData();
     this._addEventListeners();
     return this.card;
+  }
+
+  setLikesSection(res){
+    this._likesCount = res.likes?.length ?? 0;
+    this._ifILikeIt = res.likes?.some((like)=>{return like._id === this._me});
+    this._spanLikes.textContent = this._likesCount;
+    this._buttonLike.classList.toggle(this._activeLikeClass);
+  }
+
+  IfILikeIt(){
+    return this._ifILikeIt;
   }
 }

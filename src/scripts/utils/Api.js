@@ -121,6 +121,25 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
+
+  editAvatar(avatar){
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        authorization: this._headers.authorization,
+        'Content-Type': this._headers.ContentType
+      },
+      body: JSON.stringify({
+        avatar: avatar
+      })
+    })
+  .then(res => {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 }
 
 
